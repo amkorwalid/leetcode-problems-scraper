@@ -15,7 +15,10 @@ supabase = create_client(supabase_url, supabase_key)
 
 def insert_cleaned_problem(problem_data):
     """Insert a single problem pattern into Supabase"""
+    
     try:
+        if isinstance(problem_data, str):
+            problem_data = json.loads(problem_data)
         row_data = {
             "id": problem_data.get("id"),
             "title": problem_data.get("title"),
@@ -49,7 +52,7 @@ You are a LeetCode-to-Quiz converter. Transform LeetCode problems into structure
 **OUTPUT FORMAT:** Pure JSON only, no explanations, following this exact schema:
 
 {
-  "id": "XXX", (extract from the input or generate)
+  "id": XXX, (integer extract from the input or generate)
   "title": "Problem Title",
   "difficulty": "easy/medium/hard",
   "topics": ["topic1", "topic2", ...], (from tags or inferred)
