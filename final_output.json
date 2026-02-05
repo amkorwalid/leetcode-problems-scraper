@@ -1,0 +1,69 @@
+{
+        "id": "lc_003",
+        "title": "Longest Substring Without Repeating Characters",
+        "difficulty": "medium",
+
+        "topics": [
+            "sliding_window",
+            "two_pointers",
+            "hash_map"
+        ],
+
+        "problem_summary": "Given a string s, find the length of the longest substring without repeating characters.",
+
+        "canonical_idea": {
+            "pattern": "sliding_window",
+            "one_liner": "Maintain a window with unique characters using two pointers and a hashmap to track last seen indices."
+        },
+
+        "quiz": {
+            "question": "What is the main idea to solve this problem efficiently?",
+            "options": [
+            {
+                "id": "A",
+                "text": "Use a sliding window with two pointers and a hashmap to maintain unique characters",
+                "is_correct": true,
+                "tags": ["sliding_window", "hash_map"]
+            },
+            {
+                "id": "B",
+                "text": "Use dynamic programming where dp[i] is the longest valid substring ending at i",
+                "is_correct": false,
+                "why_wrong": "DP works but essentially simulates sliding window and adds unnecessary complexity.",
+                "tags": ["dp"]
+            },
+            {
+                "id": "C",
+                "text": "Generate all substrings and check uniqueness using a set",
+                "is_correct": false,
+                "why_wrong": "This results in O(n²) substrings and fails time constraints.",
+                "tags": ["bruteforce"]
+            },
+            {
+                "id": "D",
+                "text": "Sort the string and count unique characters",
+                "is_correct": false,
+                "why_wrong": "Sorting destroys substring order, which is essential.",
+                "tags": ["incorrect_logic"]
+            }
+            ]
+        },
+
+        "key_insight": "When a repeated character is found, move the left pointer just after its last occurrence.",
+
+
+        "pseudo_code": [
+            "left = 0",
+            "for right in range(n):",
+            "  if s[right] seen and last_seen[s[right]] >= left:",
+            "    left = last_seen[s[right]] + 1",
+            "  update last_seen[s[right]] = right",
+            "  answer = max(answer, right - left + 1)"
+        ],
+
+        "common_traps": [
+            "Moving left pointer one step instead of jumping to last_seen + 1",
+            "Forgetting to update last seen index",
+            "Resetting window unnecessarily"
+        ]
+    }
