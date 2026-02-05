@@ -15,10 +15,9 @@ supabase = create_client(supabase_url, supabase_key)
 
 def insert_cleaned_problem(problem_data):
     """Insert a single problem pattern into Supabase"""
+    if isinstance(problem_data, str):
+        problem_data = json.loads(problem_data)
     try:
-        if isinstance(problem_data, str):
-            problem_data = json.loads(problem_data)
-        
         row_data = {
             "id": problem_data.get("id"),
             "title": problem_data.get("title"),
@@ -52,30 +51,30 @@ You are a LeetCode-to-Quiz converter. Transform LeetCode problems into structure
 **OUTPUT FORMAT:** Pure JSON only, no explanations, following this exact schema:
 
 {
-  "id": X, (integer extract from the input or generate)
-  "title": "Problem Title",
-  "difficulty": "easy/medium/hard",
-  "topics": ["topic1", "topic2", ...], (from tags or inferred)
-  "problem_summary": "1-2 sentence description",
-  "canonical_idea": {
-    "pattern": "primary_algorithmic_pattern",
-    "one_liner": "brief optimal solution description"
-  },
-  "quiz": {
-    "question": "Multiple choice question testing key concept",
-    "options": [
-      {
-        "id": "A",
-        "text": "Option text",
-        "is_correct": true/false,
-        "why_wrong": "explanation if incorrect",
-        "tags": ["tag1", "tag2"]
-      }
-    ] (include exactly 4 options)
-  },
-  "key_insight": "The crucial realization for solving",
-  "pseudo_code": ["line1", "line2", ...], (5-8 lines max)
-  "common_traps": ["trap1", "trap2", "trap3"]
+    "id": X, (integer extract from the input or generate)
+    "title": "Problem Title",
+    "difficulty": "easy/medium/hard",
+    "topics": ["topic1", "topic2", ...], (from tags or inferred)
+    "problem_summary": "1-2 sentence description",
+    "canonical_idea": {
+        "pattern": "primary_algorithmic_pattern",
+        "one_liner": "brief optimal solution description"
+    },
+    "quiz": {
+        "question": "Multiple choice question testing key concept",
+        "options": [
+        {
+            "id": "A",
+            "text": "Option text",
+            "is_correct": true/false,
+            "why_wrong": "explanation if incorrect",
+            "tags": ["tag1", "tag2"]
+        }
+        ] (include exactly 4 options)
+    },
+    "key_insight": "The crucial realization for solving",
+    "pseudo_code": ["line1", "line2", ...], (5-8 lines max)
+    "common_traps": ["trap1", "trap2", "trap3"]
 }
 
 **RULES:**
