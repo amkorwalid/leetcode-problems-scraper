@@ -4,7 +4,10 @@ import pandas
 import os
 from openai import OpenAI
 from supabase import create_client, Client
+from dotenv import load_dotenv
 
+# Load environment variables from .env file
+load_dotenv()
 
 supabase_url = os.environ.get("SUPABASE_URL")
 supabase_key = os.environ.get("SUPABASE_KEY")
