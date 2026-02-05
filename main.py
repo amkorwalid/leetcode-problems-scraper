@@ -4,7 +4,6 @@ import pandas
 import os
 from openai import OpenAI
 from supabase import create_client, Client
-from insert_row import insert_single_question
 
 
 supabase_url = os.environ.get("SUPABASE_URL")
