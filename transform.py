@@ -1,6 +1,4 @@
-import requests
 import json
-import pandas
 import os
 from openai import OpenAI
 from supabase import create_client, Client
@@ -91,31 +89,34 @@ You are a LeetCode-to-Quiz converter. Transform LeetCode problems into structure
 
 """
 
-response = supabase.table("leetcode_questions").select("*").execute()
-
+response = supabase.table("leetcode_problems").select("*").execute()
+cleaned_problems = supabase.table("leetcode_questions").select("id").execute()
+print(f"Total problems: {len(response.data)}, Already cleaned: {len(cleaned_problems.data)}")
+print(cleaned_problems.data)
 data = response.data
-for row in data:
-    user_prompt = f"""
-        id {row['question_id']}, title {row['title']}, 
-        {row['content']} 
-        {row['url']} 
-        {row['stats']}
-        {row['category_title']}
-        {row['difficulty']}
-        {row['hints']}
-        {row['topic_tags']}
-        {row['solution']}
-        {row['solution']}
-    """
-    messages = [{"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt}]
+# for row in data:
+#     user_prompt = f"""
+#         id {row['question_id']}, title {row['title']}, 
+#         {row['content']} 
+#         {row['url']} 
+#         {row['stats']}
+#         {row['category_title']}
+#         {row['difficulty']}
+#         {row['hints']}
+#         {row['topic_tags']}
+#         {row['solution']}
+#         {row['solution']}
+#     """
+#     messages = [{"role": "system", "content": system_prompt},
+#             {"role": "user", "content": user_prompt}]
 
-    response = client.chat.completions.create(
-        model="deepseek-chat",
-        messages=messages,
-        response_format={
-            'type': 'json_object'
-        }
-    )
+#     response = client.chat.completions.create(
+#         model="deepseek-chat",
+#         messages=messages,
+#         response_format={
+#             'type': 'json_object'
+#         }
+#     )
     
-    insert_cleaned_problem(response.choices[0].message.content)
+#     insert_cleaned_problem(response.choices[0].message.content)
+    
