@@ -93,7 +93,7 @@ You are a LeetCode-to-Quiz converter. Transform LeetCode problems into structure
 
 response = supabase.table("leetcode_questions").select("*").execute()
 
-data = response.data[:3]
+data = response.data
 for row in data:
     user_prompt = f"""
         id {row['question_id']}, title {row['title']}, 
